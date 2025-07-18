@@ -20,7 +20,7 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import accuracy_score
 
-def cutting(n,maxormin1,maxormin2):
+def cutting(n,maxormin1,maxormin2): #モータの回転角度制限？
     if(maxormin1<maxormin2):
         if(n<maxormin1):
             n=maxormin1
@@ -97,10 +97,10 @@ if __name__ == '__main__':
 
     cs=40960 #contec 初期値　+-2.5の時32767,0-5Vの時40960
 
-    for ch in range(0,num_of_channels):
-        signal_buffer.append( deque([], maxlen=MAV_buffer_size) ) 
+    for ch in range(0,num_of_channels): ##データ保存空間の構築＆初期化？
+        signal_buffer.append( deque([], maxlen=MAV_buffer_size) ) ##ADconverterから読み取った値
         signal_buffer[ch].extend([cs]*MAV_buffer_size)
-        signal_buffer1.append( deque([], maxlen=MAV_buffer_size) ) 
+        signal_buffer1.append( deque([], maxlen=MAV_buffer_size) ) ##上記と同様
         signal_buffer1[ch].extend([cs]*MAV_buffer_size)
 
         emg.append( deque([], maxlen=MAV_buffer_size) )
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 
     a=7 #0.5秒間のデータの個数
 
-    bp.append( deque([], maxlen=a) )
+    bp.append( deque([], maxlen=a) )##出力した動作を保存
     bp[0].extend([[0]]*a) 
 
     
@@ -140,7 +140,7 @@ if __name__ == '__main__':
     wa=(wk+ws)/2
     ta=tk
 
-    yhds2=ha
+    yhds2=ha  
     yeds=ea
     ywds=wa
     ytds=ta
@@ -250,10 +250,10 @@ if __name__ == '__main__':
                 signal_buffer1[ch]=get_data[1][ch::num_of_channels]              
 
                 sbr=np.array(signal_buffer[ch])
-                emgr[ch]=10-(65535-sbr)/65535*20
-                ave1=sum(emgr[ch])/len(signal_buffer[ch])
-                MAVr[ch]=sum(abs(emgr[ch]-ave1))/len(emgr[ch])
-                f,t,Sxx = scipy.signal.spectrogram(emgr[ch],fs=buffer_size,nfft=n,window=win,noverlap=shift)
+                emgr[ch]=10-(65535-sbr)/65535*20 ##取ってきた値を-10V~10Vに変換
+                ave1=sum(emgr[ch])/len(signal_buffer[ch]) ##平滑化
+                MAVr[ch]=sum(abs(emgr[ch]-ave1))/len(emgr[ch]) ##MAV
+                f,t,Sxx = scipy.signal.spectrogram(emgr[ch],fs=buffer_size,nfft=n,window=win,noverlap=shift) ##FFT
                 
                 sum_sxx=[0.0]*dim
                 sum_sxX=[0.0]*dim
