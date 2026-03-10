@@ -19,6 +19,7 @@
 学習＆テストデータ：1セット収集
 
 <img width="458" height="143" alt="image" src="https://github.com/user-attachments/assets/b81fe88f-6af4-44ac-9e07-83f6d11f188f" />
+
 ## データ前処理（Data Preprocessing）
 生筋電位（sEMG）信号はノイズが多く、円滑に特徴を抽出する必要がある。そのままでは学習が困難なため、RL（Reinforcement Learning）環境に「状態（State）」として渡す前に、以下の厳密な前処理パイプラインを適用しています。
 1. **スライディングウィンドウ分割:** 連続的な6チャンネルのsEMG信号を一定のウィンドウサイズ（幅: 300ポイント, ストライド: 40ポイント）で切り出します。これにより、リアルタイムな連続認識が可能になります。
@@ -27,6 +28,7 @@
 
 3. **不要な周波数帯の除去＆ノイズ平滑化 (Smoothing):** 学習に不要な周波数帯を除去します。その後、スペクトログラムに対してガウシアンフィルター（$\sigma=1.5$）を適用し、突発的なノイズを軽減しつつ、ジェスチャー特有の周波数特徴を際立たせます。
 <img width="833" height="281" alt="image" src="https://github.com/user-attachments/assets/13f70e9f-1616-4821-8ae2-b6a4217994dc" />
+
 ## CNN特徴抽出器 (CNN Feature Extractor)
 
 ## ファイル構成と役割（File Description）
