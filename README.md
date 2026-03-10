@@ -40,14 +40,17 @@
    `test2.py` を実行し、CONTECデバイスを通じてユーザーのジェスチャーデータを取得します。
    ```bash
    python test2.py
+   <img width="1963" height="607" alt="test2" src="https://github.com/user-attachments/assets/c1093024-3600-424e-a7b8-5cfbe83339d2" />
+
 2. **強化学習環境のセットアップ (Environment Setup)**
    データ収集後、カスタム環境スクリプト `emg_env_bu.py` がデータを読み込み、学習用の環境を構築します。
-
-3. **モデルの学習 (Training)**
+3. **モデルの最適化 (Hyperparameter Optimization) [オプション]**
+   学習を本格的に開始する前に、`train.ipynb` を使用してベイズ最適化（Optuna）を実行します。これにより、DQNエージェントに最適なハイパーパラメータ（学習率、バッチサイズ、割引率など）を自動探索し、モデルの収束速度と認識精度を最大化します。
+4. **モデルの学習 (Training)**
    `train_bu.py`（または `train.ipynb`）を実行してDQNエージェントの学習を開始します。
    ```bash
    python train_bu.py
-4. **モデルの評価 (Evaluation)**
+5. **モデルの評価 (Evaluation)**
    学習済みモデル（　ex）`dqn_emg_final_model.zip`）を用いて、テストデータセットでの認識精度（Recognition Accuracy）を評価します。
 
 ## 参考文献 (References)
